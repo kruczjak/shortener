@@ -1,4 +1,4 @@
-package shortener
+package redis_client
 
 type ShortenedUrl struct {
 	Url string

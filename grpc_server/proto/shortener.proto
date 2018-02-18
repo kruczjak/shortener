@@ -1,0 +1,47 @@
+syntax = "proto3";
+package proto;
+
+service Shortener {
+    rpc ShortenUrl(ShortenUrlRequest) returns (ShortenUrlResponse) {}
+    rpc ShortenUrls(stream ShortenUrlRequest) returns (stream ShortenUrlsResponse) {}
+    rpc Info(InfoRequest) returns (InfoResponse) {}
+    rpc RemoveShortenedUrl(RemoveShortenedUrlRequest) returns (RemoveShortenedUrlResponse) {}
+}
+
+message ShortenUrlRequest {
+    string url = 1;
+    uint32 owner_id = 2;
+    string options = 3;
+}
+
+message ShortenUrlResponse {
+    string shortened_url = 1;
+}
+
+message ShortenUrlsResponse {
+    string url = 1;
+    string shortened_url = 2;
+}
+
+message RemoveShortenedUrlRequest {
+    string shortened_url = 1;
+}
+
+message RemoveShortenedUrlResponse {
+    bool success = 1;
+}
+
+message InfoRequest {
+    string shortened_url = 1;
+}
+
+message InfoResponse {
+    ShortenedUrl shortened_url = 1;
+}
+
+message ShortenedUrl {
+    string url = 1;
+    uint32 owner_id = 2;
+    string options = 3;
+    uint32 clicks = 4;
+}

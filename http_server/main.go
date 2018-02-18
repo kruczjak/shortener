@@ -3,6 +3,9 @@ package main
 import (
 	"net/http"
 	"shortener/shortener"
+	"github.com/joho/godotenv"
+	"os"
+	"shortener/config"
 )
 
 type handler struct {
@@ -19,17 +22,20 @@ func (h handler) resolveAndRedirect(w http.ResponseWriter, r *http.Request) {
 
 	shortenedUrl, err := h.shortener.Resolve(url)
 	if err != nil {
-		// something went wrong
+		http.Redirect(w, r, os.Getenv("FAILED_REDIRECTION_URL"), http.StatusTemporaryRedirect)
+		return
 	}
 
 	http.Redirect(w, r, shortenedUrl.Url, http.StatusMovedPermanently)
 }
 
 func main() {
+	godotenv.Load()
+
 	h := handler{shortener: shortener.Shortener{}}
 
 	http.HandleFunc("/", h.resolveAndRedirect)
-	if err := http.ListenAndServe(":8080", nil); err != nil {
+	if err := http.ListenAndServe(config.Getenv("HTTP_HOST", ":8080"), nil); err != nil {
 		panic(err)
 	}
 }

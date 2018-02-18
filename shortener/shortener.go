@@ -1,22 +1,19 @@
 package shortener
 
-import "github.com/go-redis/redis"
-
-type Config struct {
-	redisOptions redis.Options
-	uniqueKeyLength uint
-}
+import (
+	"shortener/redis_client"
+)
 
 type Shortener struct {}
 
 func (s Shortener) Shorten(url string) (string, error) {
-	return "", nil
+	return redis_client.ShortenUrl(url, 0, "")
 }
 
-func (s Shortener) Resolve(shortenedUrl string) (ShortenedUrl, error) {
-	return ShortenedUrl{Url: "http://wykop.pl"}, nil
+func (s Shortener) Resolve(shUrl string) (redis_client.ShortenedUrl, error) {
+	return redis_client.FindShortenedUrl(shUrl)
 }
 
-func (s Shortener) Remove(shortenedUrl string) (bool, error) {
-	return true, nil
+func (s Shortener) Remove(shUrl string) (bool, error) {
+	return redis_client.RemoveShortenedUrl(shUrl)
 }
