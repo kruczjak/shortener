@@ -15,5 +15,5 @@ HTTP server only makes redirections with 301 (Moved Permanently) status code. Bu
 
 ### gRPC Server
 
-gRPC api is used to manage urls. Build `main.go` file in grpc_server folder and run with needed environment variables.
+gRPC API manages urls. Build `main.go` file in grpc_server folder and run with needed environment variables.
 
