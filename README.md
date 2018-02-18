@@ -11,7 +11,7 @@ WIP: Shortener API written in GO using Redis, gRPC and optional RabbitMQ to send
 
 ### HTTP server
 
-HTTP server only makes redirections. Build `main.go` file in http_server folder and run with needed environment variables.
+HTTP server only makes redirections with 301 (Moved Permanently) status code. Build `main.go` file in http_server folder and run with needed environment variables.
 
 ### gRPC Server
 
